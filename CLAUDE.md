@@ -31,3 +31,16 @@ This is a Flask web app that displays real-time B3 stock quotes fetched via `yfi
 **SSL note:** `stock_service.py` disables SSL verification globally (`ssl._create_unverified_context`, `urllib3.disable_warnings`) to work around corporate proxy environments. This is intentional — do not remove without verifying connectivity still works.
 
 **Adding a new ticker:** Add an entry to `TICKERS` in `config.py` with keys `symbol` (Yahoo Finance format, e.g. `"BBDC4.SA"`), `name`, and `color`. No other changes needed.
+
+## GitHub Repository
+
+Remote: https://github.com/RodolfoGalvao/cotacoes-b3
+
+**Auto-sync:** A `PostToolUse` hook in `.claude/settings.local.json` automatically commits and pushes to `origin/master` after every file edit made by Claude. No manual `git push` needed after Claude changes files.
+
+To push manual changes:
+```bash
+git add -A && git commit -m "your message" && git push origin master
+```
+
+The `gh` CLI is at `C:\Users\00661189309\AppData\Local\Microsoft\WinGet\Packages\GitHub.cli_Microsoft.Winget.Source_8wekyb3d8bbwe\bin\gh.exe` (also on PATH after opening a new terminal).

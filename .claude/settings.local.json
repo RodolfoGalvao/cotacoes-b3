@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config *)",
+      "Read(//c/Program Files/**)",
+      "Bash(ls \"/c/Python\"*)",
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "Bash(where py *)",
+      "Bash(python -c \"import sys; print\\(sys.executable\\)\")",
+      "Read(//c/Users/00661189309/AppData/Local/Programs/Python//**)",
+      "Bash(ls /c/Python*)",
+      "Read(//c/Users/00661189309/**)",
+      "Bash(cmd.exe /c \"dir \\\\\"C:\\\\\\\\Program Files\\\\\" /b 2>nul | findstr /i git & dir \\\\\"C:\\\\\\\\Program Files \\(x86\\)\\\\\" /b 2>nul | findstr /i git\")",
+      "Bash(cmd.exe /c \"dir /s /b \\\\\"C:\\\\\\\\Program Files\\\\\\\\gh.exe\\\\\" 2>&1 & dir /s /b \\\\\"C:\\\\\\\\Users\\\\\\\\00661189309\\\\\\\\AppData\\\\\\\\Local\\\\\\\\gh.exe\\\\\" 2>&1\")",
+      "Bash(cmd.exe /c \"dir /s /b C:\\\\\\\\gh.exe 2>&1 | head -5\")",
+      "Bash(cmd.exe /c \"powershell -command \\\\\"Get-Command gh -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\\\\\"\")",
+      "Bash(ls \"/c/Program Files/GitHub CLI/\" 2>/dev/null || ls \"/c/Program Files \\(x86\\)/GitHub CLI/\" 2>/dev/null || echo \"not found in Program Files\")",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(find /c/Users/00661189309/AppData/Local -name \"gh.exe\" 2>/dev/null; find /c/ProgramData -name \"gh.exe\" 2>/dev/null)",
+      "Read(//c/ProgramData/**)",
+      "Bash(winget list *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"C:/Users/00661189309/Projeto ClaudeCode\" && git add -A && git diff --cached --quiet || git commit -m \"chore: auto-sync changes by Claude\" && git push origin master"
+          }
+        ]
+      }
+    ]
+  }
+}
