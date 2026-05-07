@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotações B3</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Cotações B3</h1>
+    <p class="subtitle">Atualização automática a cada {{ refresh_interval }}s</p>
+    <p class="last-updated" id="last-updated"></p>
+  </header>
+
+  <main class="cards-grid" id="cards-container">
+    {% for code, q in quotes.items() %}
+    <div class="card" data-ticker="{{ code }}" style="border-top: 4px solid {{ q.color }}">
+      <div class="card-header">
+        <span class="ticker">{{ code }}</span>
+        <span class="company">{{ q.name }}</span>
+      </div>
+
+      {% if q.error %}
+        <p class="error">Dados indisponíveis</p>
+      {% else %}
+        <div class="price" id="price-{{ code }}">
+          R$ {{ "%.2f"|format(q.price) }}
+        </div>
+        <div class="change {{ 'positive' if q.change >= 0 else 'negative' }}" id="change-{{ code }}">
+          {{ "%+.2f"|format(q.change) }} ({{ "%+.2f"|format(q.change_pct) }}%)
+        </div>
+        <div class="prev-close">
+          Fechamento anterior: R$ {{ "%.2f"|format(q.prev_close) }}
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-{{ code }}"></canvas>
+        </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </main>
+
+  <script>
+    const REFRESH_INTERVAL = {{ refresh_interval }} * 1000;
+    const TICKER_COLORS = { {% for code, q in quotes.items() %}"{{ code }}": "{{ q.color }}"{% if not loop.last %}, {% endif %}{% endfor %} };
+  </script>
+  <script src="{{ url_for('static', filename='js/refresh.js') }}"></script>
+</body>
+</html>
