@@ -116,9 +116,10 @@ def parse_nfse(blocks: list) -> dict:
 
         # ── Discriminação dos serviços ─────────────────────────────────
         if not discriminacao and tu.startswith('DESCRI') and ':' in text:
-            m = re.search(r'Descri[çc][ãa]o:(.+)', text, re.IGNORECASE)
+            m = re.search(r'Descri[çc][ãa]o:(.+)', text, re.IGNORECASE | re.DOTALL)
             if m:
-                discriminacao = m.group(1).strip().split('\n')[0]
+                # Preserva texto completo, substitui quebras de linha por espaço
+                discriminacao = ' '.join(m.group(1).strip().split('\n'))
 
         # ── Itens da nota ──────────────────────────────────────────────
         m = RE_ITEM.match(text)
