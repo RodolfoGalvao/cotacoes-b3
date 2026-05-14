@@ -89,11 +89,13 @@ def parse_nfse(blocks: list) -> dict:
             tomador_name_found    = False
             after_cpf_tomador_lbl = False
 
-        # Nome do tomador: primeiro bloco após header com x0 > 100 sem label
+        # Nome do tomador: primeiro bloco após header com x0 > 100 sem label.
+        # Não usar substring genérica (ex.: 'MUNIC') pois pode estar no nome da entidade.
         if after_tomador_header and not tomador_name_found:
-            skip_labels = ('NOME', 'CPF', 'ENDERE', 'MUNIC', 'DISCRIMINA',
-                           'INSCRI', 'TELEFONE', 'EMAIL', 'UF:', 'SAO LUIS')
-            if x0 > 100 and not any(kw in tu for kw in skip_labels):
+            skip_labels = ('NOME', 'CPF', 'ENDERE', 'INSCRI', 'DISCRIMINA',
+                           'TELEFONE:', 'EMAIL:')
+            is_phone_block = text.startswith('(') or text.startswith('+')
+            if x0 > 100 and not is_phone_block and not any(kw in tu for kw in skip_labels):
                 nome_tomador   = text.split('\n')[0].strip()
                 tomador_name_found = True
 
