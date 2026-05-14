@@ -19,7 +19,12 @@
       "Read(//c/Program Files \\(x86\\)/**)",
       "Bash(find /c/Users/00661189309/AppData/Local -name \"gh.exe\" 2>/dev/null; find /c/ProgramData -name \"gh.exe\" 2>/dev/null)",
       "Read(//c/ProgramData/**)",
-      "Bash(winget list *)"
+      "Bash(winget list *)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(dir \"$env:LOCALAPPDATA\\\\AnthropicClaude\" /s /b 2>$null | Select-Object -First 30)",
+      "PowerShell(where.exe python; python --version; python -c \"import sys; print\\('Executavel:', sys.executable\\); print\\('Versao:', sys.version\\)\")",
+      "PowerShell(claude *)",
+      "Bash(python *)"
     ]
   },
   "hooks": {
